@@ -12,6 +12,15 @@ class Date:
         self.hour1 = hour1
         self.hour2 = hour2
         self.hourList = []
+        self.daysList = [
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes",
+            "Sabado",
+            "Domingo"
+        ]
     
     def create_date(self):
         
@@ -30,7 +39,10 @@ class Date:
             while self.hour1 <= self.hour2:
                 self.hourList.append(self.hour1.strftime("%H:%M:%S"))
                 self.hour1 = (datetime.datetime.combine(date.today(), self.hour1) + datetime.timedelta(minutes=60)).time()
-            return self.hourList
+            #return self.hourList
+        
+
+
 
 print(Date(datetime.datetime(2021, 1, 1), datetime.datetime(2021, 1, 31), datetime.time(8, 0, 0), datetime.time(18, 0, 0)).create_date())
 
