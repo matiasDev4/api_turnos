@@ -5,10 +5,13 @@ from datetime import time, date
 # Crear clase hora
 
 class Date:
-    def __init__(self, date1: datetime.datetime, date2: datetime.datetime):
+    def __init__(self, date1: datetime.datetime, date2: datetime.datetime, hour1: datetime.time, hour2: datetime.time):
         self.date1 = date1
         self.date2 = date2
         self.dateList = []
+        self.hour1 = hour1
+        self.hour2 = hour2
+        self.hourList = []
     
     def create_date(self):
         
@@ -21,9 +24,14 @@ class Date:
                 if self.date1.weekday() < 5 and self.date1.weekday() != 0: #-> Salteo de dias lunes, Sabados y Domingos
                     self.dateList.append(self.date1.strftime("%d-%m-%Y")) #-> Agrego las fechas al array
                 self.date1 = self.date1 + datetime.timedelta(days=1) #-> Sumo un dia a la fecha
-            return self.dateList
+            #return self.dateList
+        
+        if self.hourList == []:
+            while self.hour1 <= self.hour2:
+                self.hourList.append(self.hour1.strftime("%H:%M:%S"))
+                self.hour1 = (datetime.datetime.combine(date.today(), self.hour1) + datetime.timedelta(minutes=60)).time()
+            return self.hourList
 
-
-print(Date(datetime.datetime(2021, 1, 1), datetime.datetime(2021, 2, 1)).create_date())
+print(Date(datetime.datetime(2021, 1, 1), datetime.datetime(2021, 1, 31), datetime.time(8, 0, 0), datetime.time(18, 0, 0)).create_date())
 
 
