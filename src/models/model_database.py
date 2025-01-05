@@ -1,10 +1,12 @@
-from sqlalchemy import column, Integer, String
-from src.config.database import base
+from sqlalchemy import Column, Integer, String, Boolean
+from config.database import base
 
 
 class Dates_db(base):
     __tablename__ = "dates"
 
-    id = column(Integer, primary_key=True)
-    date = column(String, nullable=False)
-    hours = column(String, nullable=False)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(250), nullable=False)
+    date = Column(String(250), nullable=False)
+    hours = Column(String(250), nullable=False)
+    is_active = Column(Boolean, nullable=False)
