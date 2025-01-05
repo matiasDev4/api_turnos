@@ -2,10 +2,13 @@ import datetime
 from datetime import time, date
 import os
 import json
+import locale
 
 # Crear clase fecha
 # Crear clase hora
 path = os.getcwd() 
+
+locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 class Date:
     def __init__(self, date1: datetime.datetime, date2: datetime.datetime, hour1: datetime.time, hour2: datetime.time, name: str):
@@ -16,9 +19,8 @@ class Date:
         self.hour2 = hour2
         self.hourList = []
         self.name = name
-        self.data = {"months": []}
-        self.data["months"] = [{self.name: []}]
-         
+        self.data = {"dates": []}
+
     
     def create_date(self):
         
@@ -29,7 +31,7 @@ class Date:
         if self.dateList == []: #-< Si el array esta vacio
             while self.date1 <= self.date2: #-> Mientras la fecha 1 sea menor o igual a la fecha 2
                 if self.date1.weekday() < 5 and self.date1.weekday() != 0: #-> Salteo de dias lunes, Sabados y Domingos
-                    self.dateList.append(self.date1.strftime("%a-%m-%Y")) #-> Agrego las fechas al array
+                    self.dateList.append(self.date1.strftime("%a | %d-%m-%Y")) #-> Agrego las fechas al array
                 self.date1 = self.date1 + datetime.timedelta(days=1) #-> Sumo un dia a la fecha
             #return self.dateList
         
@@ -42,28 +44,30 @@ class Date:
         if not os.path.exists(path + "/dates"):
             os.makedirs(path + "/dates")
 
-        if not os.path.exists(path + "/dates/dates.json"):
-            with open (path + "/dates/dates.json", "w") as file:
-                for list_data in self.dateList:
-                    self.data["months"][0][{f"date":list_data, "hour": [str(x) for x in self.hourList]}]
-                data_json = json.dumps(self.data, indent=4)
-                file.write(data_json)   
+        json_path = path + "/dates/dates.json"
 
-        if os.path.exists(path + "/dates/dates.json"):
-            with open (path + "/dates/dates.json") as file:
+        if os.path.exists(json_path):
+            with open (json_path, "r", encoding="utf-8") as file:
                 json_file = json.load(file)
-                for list_data in self.dateList:
-                    json_file["months"][0].append({f"date":list_data, "hour": [str(x) for x in self.hourList]})
+                
+        else:
+            json_file = {"dates": []}
 
-            with open (path + "/dates/dates.json", "w") as outfile:
+        new = {
+                "months": self.name, 
+                "date": [str(x) for x in self.dateList], 
+                "hour":[str(x) for x in self.hourList]
+            }
 
-                json.dump(json_file, outfile, indent=4)
+        if not any(d['date'] == new['date'] for d in json_file["dates"]):
+            json_file["dates"].append(new)
+                    
+        with open (json_path, "w", encoding="utf-8") as outfile:
+            json.dump(json_file, outfile, indent=4)
 
-            return "Archivo creado con exito"
+        return "Archivo creado con exito"
         
 
     
-print(Date(datetime.datetime(2021, 1, 1), datetime.datetime(2021, 1, 31), datetime.time(8, 0, 0), datetime.time(18, 0, 0), "Mes enero").create_date())
-print(Date(datetime.datetime(2021, 1, 1), datetime.datetime(2021, 1, 31), datetime.time(8, 0, 0), datetime.time(18, 0, 0), "Mes febrero").create_date())
-
-
+print(Date(datetime.datetime(2021, 1, 1), datetime.datetime(2021, 1, 31), datetime.time(8, 0, 0), datetime.time(18, 0, 0), "Enero").create_date())
+print(Date(datetime.datetime(2021, 2, 1), datetime.datetime(2021, 2, 28), datetime.time(8, 0, 0), datetime.time(18, 0, 0), "Febrero").create_date())
