@@ -26,7 +26,7 @@ async def get_date(db: Session = Depends(get_db)):
         for x in json_file["dates"]:
             for entry in x["date"]:
                 consult = db.query(Dates_db).filter(Dates_db.date==entry).all()
-                return consult
+                return 
 
 
 @app_route.post("/create_dates")
