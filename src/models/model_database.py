@@ -13,7 +13,7 @@ class Dates_db(base):
 
 class dates_aviality(base):
     __tablename__ = "aviality"
-
+    
     id = Column(Integer, primary_key=True, autoincrement=True)
     day = Column(String(250), nullable=False)
     date = Column(String(250), nullable=False)
