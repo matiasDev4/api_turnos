@@ -11,14 +11,13 @@ path = os.getcwd()
 locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
 
 class Date:
-    def __init__(self, date1: datetime.datetime, date2: datetime.datetime, hour1: datetime.time, hour2: datetime.time, name: str):
+    def __init__(self, date1: datetime.datetime, date2: datetime.datetime, hour1: datetime.time, hour2: datetime.time):
         self.date1 = date1
         self.date2 = date2
         self.dateList = []
         self.hour1 = hour1
         self.hour2 = hour2
         self.hourList = []
-        self.name = name
         self.data = {"dates": []}
 
     
@@ -37,7 +36,7 @@ class Date:
         
         if self.hourList == []:
             while self.hour1 <= self.hour2:
-                self.hourList.append(self.hour1.strftime("%H:%M:%S"))
+                self.hourList.append(self.hour1.strftime("%H:%M"))
                 self.hour1 = (datetime.datetime.combine(date.today(), self.hour1) + datetime.timedelta(minutes=60)).time()
             #return self.hourList
         
@@ -51,16 +50,14 @@ class Date:
                 json_file = json.load(file)
                 
         else:
-            json_file = {"dates": []}
+            for x in self.dateList:
+                new = {
+                    x:[str(x) for x in self.hourList], 
+                    }
+                json_file["dates"].append(new)
 
-        new = {
-                "months": self.name, 
-                "date": [str(x) for x in self.dateList], 
-                "hour":[str(x) for x in self.hourList]
-            }
 
-        if not any(d['date'] == new['date'] for d in json_file["dates"]):
-            json_file["dates"].append(new)
+
                     
         with open (json_path, "w", encoding="utf-8") as outfile:
             json.dump(json_file, outfile, indent=4)
@@ -69,5 +66,10 @@ class Date:
         
 
     
-print(Date(datetime.datetime(2021, 1, 1), datetime.datetime(2021, 1, 31), datetime.time(8, 0, 0), datetime.time(18, 0, 0), "Enero").create_date())
-print(Date(datetime.datetime(2021, 2, 1), datetime.datetime(2021, 2, 28), datetime.time(8, 0, 0), datetime.time(18, 0, 0), "Febrero").create_date())
+print(Date(datetime.datetime(2025, 1, 1), datetime.datetime(2025, 12, 31), datetime.time(11, 0, 0), datetime.time(17, 0, 0)).create_date())
+
+with open(os.getcwd() + "/dates/dates.json", "r") as file:
+    json_data = json.load(file)
+    for x in json_data["dates"]:
+        for j in x:
+            print(x[j])
