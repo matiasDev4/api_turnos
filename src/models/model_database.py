@@ -26,5 +26,5 @@ class User(base):
     user_email = Column(String(250), nullable=False)
     user_pay_status = Column(String(250), nullable=False)
     date_selected = Column(String(250), nullable=False)
-    hour_selected = Column(Integer, ForeignKey("hours.hour"))
+    hour_selected = Column(String(250), ForeignKey("hours.hour"))
     
