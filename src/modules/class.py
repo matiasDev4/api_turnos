@@ -18,7 +18,6 @@ class Date:
         self.hour1 = hour1
         self.hour2 = hour2
         self.hourList = []
-        self.data = {"dates": []}
 
     
     def create_date(self):
@@ -40,36 +39,4 @@ class Date:
                 self.hour1 = (datetime.datetime.combine(date.today(), self.hour1) + datetime.timedelta(minutes=60)).time()
             #return self.hourList
         
-        if not os.path.exists(path + "/dates"):
-            os.makedirs(path + "/dates")
-
-        json_path = path + "/dates/dates.json"
-
-        if os.path.exists(json_path):
-            with open (json_path, "r", encoding="utf-8") as file:
-                json_file = json.load(file)
-                
-        else:
-            for x in self.dateList:
-                new = {
-                    x:[str(x) for x in self.hourList], 
-                    }
-                json_file["dates"].append(new)
-
-
-
-                    
-        with open (json_path, "w", encoding="utf-8") as outfile:
-            json.dump(json_file, outfile, indent=4)
-
-        return "Archivo creado con exito"
         
-
-    
-print(Date(datetime.datetime(2025, 1, 1), datetime.datetime(2025, 12, 31), datetime.time(11, 0, 0), datetime.time(17, 0, 0)).create_date())
-
-with open(os.getcwd() + "/dates/dates.json", "r") as file:
-    json_data = json.load(file)
-    for x in json_data["dates"]:
-        for j in x:
-            print(x[j])
