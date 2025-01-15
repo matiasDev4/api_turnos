@@ -7,7 +7,7 @@ class Dates_db(base):
     __tablename__ = "dates"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    date = Column(String(250), nullable=False)
+    dates_ = Column(String(250), nullable=False)
     rel_hour = relationship("Hours")
 
 class Hours(base):
@@ -15,7 +15,7 @@ class Hours(base):
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     hour = Column(String(250), nullable=False)
-    date_unique = Column(Integer, ForeignKey("dates.date"))
+    date_unique = Column(Integer, ForeignKey("dates.dates_"))
     rel_hour = relationship("User")
     
 class User(base):
