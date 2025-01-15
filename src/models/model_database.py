@@ -16,7 +16,8 @@ class Hours(base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     hour = Column(String(250), nullable=False)
     date_unique = Column(Integer, ForeignKey("dates.dates_"))
-    rel_hour = relationship("User")
+    user = Column(Integer, ForeignKey("users.user_email"))
+    rel_hour = relationship("User", back_populates="hour_unique")
     
 class User(base):
     __tablename__ = "users"
@@ -27,4 +28,5 @@ class User(base):
     user_pay_status = Column(String(250), nullable=False)
     date_selected = Column(String(250), nullable=False)
     hour_selected = Column(String(250), ForeignKey("hours.hour"))
+    hour_unique = relationship("Hours", back_populates="rel_hour")
     

@@ -28,10 +28,24 @@ async def get_date(db: Session = Depends(get_db)):
 @app_route.post("/create_dates")
 def create_date(db: Session = Depends(get_db)):
     fechas = crear_fecha()
-    query = db.query(Dates_db).filter()
+    query = db.query(Dates_db).all()
     if query is None:
         for x in fechas:
             insert = Dates_db(dates_ = x)
+            db.add(insert)
+            db.commit()
+            db.refresh(insert)
+        return {"message":"fechas creadas"}
+    else:
+        pass
+
+@app_route.post("/create_dates")
+def create_hours(db: Session = Depends(get_db)):
+    horas = crear_fecha()
+    query = db.query(Dates_db).all()
+    if query is None:
+        for x in horas:
+            insert = Dates_db(Hours)
             db.add(insert)
             db.commit()
             db.refresh(insert)
