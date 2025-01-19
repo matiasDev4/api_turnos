@@ -8,7 +8,6 @@ class Dates_db(base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     dates_ = Column(String(250), nullable=False)
-    rel_hour = relationship("Hours")
 
 class Hours(base):
     __tablename__ = "hours"
@@ -17,7 +16,6 @@ class Hours(base):
     hour = Column(String(250), nullable=False)
     date_unique = Column(Integer, ForeignKey("dates.dates_"))
     user = Column(Integer, ForeignKey("users.user_email"))
-    rel_hour = relationship("User", back_populates="hour_unique")
     
 class User(base):
     __tablename__ = "users"
@@ -28,5 +26,14 @@ class User(base):
     user_pay_status = Column(String(250), nullable=False)
     date_selected = Column(String(250), nullable=False)
     hour_selected = Column(String(250), ForeignKey("hours.hour"))
-    hour_unique = relationship("Hours", back_populates="rel_hour")
+
+
+class Courses(base):
+    __tablename__ = "courses"
     
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(250), nullable=False)
+    description = Column(String(250), nullable=False)
+    price = Column(String(250), nullable=False)
+    img_name = Column(String(250), nullable=False)
+    is_active = Column(Boolean, nullable=False)

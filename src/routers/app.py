@@ -2,7 +2,7 @@ from fastapi.routing import APIRouter
 from fastapi import Depends
 from config.database import base, engine, session
 from sqlalchemy.orm import Session
-from schemas.schema_shift import ShiftBase
+from schemas.schema import ShiftBase
 from models.model_database import Dates_db, Hours
 import json
 import os
