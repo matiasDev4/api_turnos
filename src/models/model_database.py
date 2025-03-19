@@ -34,6 +34,6 @@ class Courses(base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(250), nullable=False)
     description = Column(String(250), nullable=False)
-    price = Column(String(250), nullable=False)
+    price = Column(String(50), nullable=False)
     img_name = Column(String(250), nullable=False)
     is_active = Column(Boolean, nullable=False)

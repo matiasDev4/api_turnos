@@ -11,7 +11,7 @@ class Courser_schema(BaseModel):
     name: str = Form(...)
     description: str = Form(...)
     img_name: str 
-    price: str = Form(...)
+    price: int = Form(...)
     is_active: bool = Form(...)
 
 

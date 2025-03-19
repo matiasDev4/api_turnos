@@ -1,4 +1,5 @@
 from fastapi.routing import APIRouter
+from fastapi.responses import JSONResponse
 from fastapi import Depends
 from config.database import base, engine, session
 from sqlalchemy.orm import Session
@@ -23,6 +24,7 @@ def get_db():
 @app_route.get("/availability_dates")
 async def get_date(db: Session = Depends(get_db)):
     query = db.query(Dates_db).join(Hours.hour==Dates_db.rel_hour).all()
+    return query
 
 
 @app_route.post("/create_dates")
@@ -33,13 +35,13 @@ def create_date(db: Session = Depends(get_db)):
         for x in fechas:
             insert = Dates_db(dates_ = x)
             db.add(insert)
-            db.commit()
-            db.refresh(insert)
-        return {"message":"fechas creadas"}
+        db.commit()
+        JSONResponse(content="Fechas creadas", status_code=201)
     else:
-        pass
+        JSONResponse(content="Esas fechas ya existen", status_code=200)
+        
 
-@app_route.post("/create_dates")
+@app_route.post("/create_hours")
 def create_hours(db: Session = Depends(get_db)):
     horas = crear_fecha()
     query = db.query(Dates_db).all()
@@ -47,9 +49,8 @@ def create_hours(db: Session = Depends(get_db)):
         for x in horas:
             insert = Dates_db(Hours)
             db.add(insert)
-            db.commit()
-            db.refresh(insert)
-        return {"message":"fechas creadas"}
+        db.commit()
+        JSONResponse(content="Horas creadas", status_code=201)
     else:
-        pass
+        JSONResponse(content="Esas horas ya existen", status_code=200)
       
