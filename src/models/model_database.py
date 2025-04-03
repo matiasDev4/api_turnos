@@ -23,8 +23,10 @@ class User(base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_name = Column(String(250), nullable=False)
     user_email = Column(String(250), nullable=False)
-    user_pay_status = Column(String(250), nullable=False)
-    date_selected = Column(String(250), nullable=False)
+    user_password = Column(String(250), nullable=False)
+    user_role = Column(String(250), nullable=False)
+    user_pay_status = Column(String(250), nullable=True)
+    date_selected = Column(String(250), nullable=True)
     hour_selected = Column(String(250), ForeignKey("hours.hour"))
 
 
@@ -35,5 +37,6 @@ class Courses(base):
     name = Column(String(250), nullable=False)
     description = Column(String(250), nullable=False)
     price = Column(String(50), nullable=False)
-    img_name = Column(String(250), nullable=False)
+    portada = Column(String(250), nullable=False)
+    video = Column(String(250), nullable=False)
     is_active = Column(Boolean, nullable=False)

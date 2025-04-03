@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from routers.app import app_route
 from routers.cursor import app_cursos
+from routers.login import app_login
 
 mainApp = FastAPI()
 
@@ -10,6 +11,7 @@ mainApp.description = "API para turnos"
 
 mainApp.include_router(app_route)
 mainApp.include_router(app_cursos)
+mainApp.include_router(app_login)
 
 origins = [
     "http://localhost:5173",

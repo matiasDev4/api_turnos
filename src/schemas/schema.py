@@ -8,11 +8,16 @@ class ShiftBase(BaseModel):
 
 
 class Courser_schema(BaseModel):
-    name: str = Form(...)
-    description: str = Form(...)
-    img_name: str 
-    price: int = Form(...)
-    is_active: bool = Form(...)
+    name: str 
+    description: str 
+    price: int 
+    status: bool 
+
+class userRegister(BaseModel):
+    username: str
+    email: str
+    password: str
+
 
 
 
