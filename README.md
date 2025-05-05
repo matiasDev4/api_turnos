@@ -1,6 +1,9 @@
 ## API para cursos online 
 - diseñe esta api para el proyecto web Lolinail, la cual maneja el CRUD de la aplicacion y la logica de autenticacion para el panel administrativo.
 
+> [!IMPORTANT]
+> Actualmenete me encuentro refactorizando todo el proyecto, agregando como base de datos PostgreSQL y mejorando la legibilidad del codigo
+
 ## ¿Que implemente?
 - Todos los endpoints para la creacion, actualizacion o eliminacion de cada curso.
 - Login, register + autenticación mediante JWT y las clases de seguridad que ofrece FastAPI
